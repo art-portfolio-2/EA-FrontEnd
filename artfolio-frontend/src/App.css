@@ -1,0 +1,66 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
+.navBar {
+  background-color: #101010;
+  color: white;
+  height: 70px;
+  text-decoration: none;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+padding: 30px;
+}
+
+.links {
+  color: white;
+}
+
+.navs {
+  color: white;
+  margin-right: 33%;
+  
+}
+
+.na {
+  padding-left: 90px;
+}
+
+.jumbo {
+  display: flex;
+flex-direction: column;
+justify-items: start;
+padding: 0;
+margin: 0;
+border: 1px solid red;
+
+
+}
+
+/*
+
+`Grey: #D1D1D1`
+`Black: #101010`
+`Lighter Black: #1D1D1D`
+`White: #FFFFFF`
+
+From the example images:
+`Grey: #E2DFDA`
+`Darker Grey: #5C5C5C`
+`Mouseover Black: #2C2C2B`
+`White: #F2F3ED`
+
+From the team backgrounds (variations of grey):
+`Darkest: #AA9F91`
+`Light: #DADADA`
+`Lightest: #E9E9EB`
+`Dark: #DDD8D`
+
+*/
