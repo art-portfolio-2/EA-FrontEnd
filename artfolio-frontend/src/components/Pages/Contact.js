@@ -2,13 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import {
   Col,
-  Row,
   Button,
   Form,
   FormGroup,
   Label,
   Input,
-  FormText,
 } from 'reactstrap';
 
 const ContactDiv = styled.div`
