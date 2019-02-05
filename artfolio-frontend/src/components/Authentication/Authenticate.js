@@ -11,7 +11,7 @@ const authenticate = App => Login =>
     }
 
     logout = ev => {
-      //ev.preventDefault();
+      ev.preventDefault();
       if (ls.get('user')) ls.remove('user');
       this.setState({ loggedIn: false });
     };

@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import AboutMe from './components/Pages/AboutMe';
 import Home from './components/Pages/Home';
 import Contact from './components/Pages/Contact';
-import Portfolio from './components/Pages/Portfolio';
+import Posts from './components/Pages/Posts';
 import authenticate from './components/Authentication/Authenticate';
 import Login from './components/Login/Login';
 
@@ -18,7 +18,7 @@ class App extends Component {
         <NavBar loggedIn={this.props.loggedIn} logout={this.props.logout}/>
         <Route exact path="/" component={Home} />
         <Route path="/about" component={AboutMe} />
-        <Route path="/portfolio" component={Portfolio} />
+        <Route path="/posts" component={Posts} />
         <Route path="/contact" component={Contact} />
         <Route path="/login" component={Login} />
       </div>
