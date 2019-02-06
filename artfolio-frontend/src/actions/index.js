@@ -14,7 +14,7 @@ export const login = user => dispatch => {
   dispatch({ type: LOGIN_START });
   axios
     .post('https://backend-art.herokuapp.com/api/login', user)
-    .then(res => { dispatch({ type: LOGIN_SUCCESS, payload: res });
+    .then(res => { dispatch({ type: LOGIN_SUCCESS, payload: res.data });
       console.log('this post logged');
     })
     .catch(err => console.log(err));

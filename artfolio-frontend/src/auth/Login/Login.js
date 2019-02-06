@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { login } from '../../actions';
-import ls from 'local-storage'
+import ls from 'local-storage';
 
 const FormContainer = styled.div`
   width: 100%;
@@ -84,9 +84,8 @@ const FormContainer = styled.div`
 
 class Login extends Component {
   state = {
-    email: '',
+    username: '',
     password: '',
-    clicked: false,
   };
 
   handleChange = ev => {
@@ -95,31 +94,30 @@ class Login extends Component {
 
   handleLogin = e => {
     e.preventDefault();
-    const user = {
-      email: this.state.email,
-      password: this.state.password,
-    };
-    if (this.state.email === '' || this.state.password === '') {
-      this.setState({ clicked: true });
-      return alert('Please input an email and password to login!');
-    }
-    this.props.login(user);
-    ls.set('user', user)
-   
+    // const user = {
+    //   email: this.state.email,
+    //   password: this.state.password,
+    // };
+    // if (this.state.email === '' || this.state.password === '') {
+    //   this.setState({ clicked: true });
+    //   return alert('Please input an email and password to login!');
+    // }
+    this.props.login(this.state);
+    this.props.history.push('/posts');
+    //ls.set('user', user)
   };
 
-  componentDidUpdate() {
-    console.log('CDU')
-    if(this.props.isLoggedIn) {
-      this.props.history.push('/posts')
-    }
-    
-  }
+  // componentDidUpdate() {
+  //   console.log('CDU')
+  //   if(this.props.isLoggedIn) {
+  //     this.props.history.push('/posts')
+  //   }
+
+  // }
 
   render() {
     return (
       <div>
-      
         <FormContainer>
           <div className="loginPageLeft">
             <h1>ARTFOLIO</h1>
@@ -135,46 +133,25 @@ class Login extends Component {
           <Form className="loginForm">
             <h3>Welcome to ArtFolio-2</h3>
             <h5>Please Login</h5>
-            {this.state.clicked ? (
-              <Input
-                invalid
-                className="input invalid"
-                name="email"
-                type="email"
-                placeholder="Email"
-                value={this.state.email}
-                onChange={this.handleChange}
-              />
-            ) : (
-              <Input
-                className="input"
-                name="email"
-                type="email"
-                placeholder="Email"
-                value={this.state.email}
-                onChange={this.handleChange}
-              />
-            )}
-            {this.state.clicked ? (
-              <Input
-                invalid
-                className="input invalid"
-                name="password"
-                type="password"
-                placeholder="Password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              />
-            ) : (
-              <Input
-                className="input"
-                name="password"
-                type="password"
-                placeholder="Password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              />
-            )}
+
+            <Input
+              className="input"
+              name="username"
+              type="text"
+              placeholder="Username"
+              value={this.state.username}
+              onChange={this.handleChange}
+            />
+
+            <Input
+              className="input"
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+
             <br />
             <Button className="btn" onClick={this.handleLogin}>
               Login

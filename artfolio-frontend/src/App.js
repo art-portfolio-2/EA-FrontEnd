@@ -48,7 +48,7 @@ class App extends Component {
       <div className="App">
         <NavBar isLoggedIn={this.props.isLoggedIn} logout={this.logout} />
         {/* <Route exact path="/" component={Home} /> */}
-        <Route exact path="/" component={Posts} />
+        <Route exact path="/posts" component={Posts} />
         <Route path="/about" component={AboutMe} />
         {/* <PrivateRoute {...this.props} isLoggedIn={this.props.isLoggedIn} /> */}
         <Route history={this.props.history} path="/login" component={Login} />
