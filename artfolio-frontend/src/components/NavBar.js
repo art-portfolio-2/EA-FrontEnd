@@ -3,7 +3,6 @@ import { NavLink, Link } from 'react-router-dom';
 
 export default class NavBar extends React.Component {
   render() {
-    console.log(this.props.loggedIn);
     return (
       <div className="navBar">
         <div className="logo">
@@ -11,33 +10,27 @@ export default class NavBar extends React.Component {
             Artfolio-2
           </NavLink>
         </div>
-        {this.props.loggedIn ? (
+        {/* {this.props.isLoggedIn ? ( */}
           <nav className="navs">
-            <NavLink className="links na" to="/">
-              Home
-            </NavLink>
             <NavLink className="links na" to="/about">
-              About Me
+              Profile
             </NavLink>
-
-            <NavLink className="links na" to="/posts">
+            <NavLink className="links na" to="/">
               Posts
             </NavLink>
-            <NavLink className="links na" to="/contact">
-              Contact
-            </NavLink>
+
           </nav>
-        ) : null}
+        {/* ) : null} */}
         <div className="login">
-          {this.props.loggedIn ? (
-            <Link className="links" to="/">
+          {/* {this.props.isLoggedIn ? ( */}
+            <Link className="links" to="/login">
               <span onClick={this.props.logout}>Log Out</span>
             </Link>
-          ) : (
-            <Link className="links" to="#">
-              <span>Login</span>
+          {/* ) : ( */}
+            <Link className="links" to="/signup">
+              <span>Sign Up</span>
             </Link>
-          )}
+          {/* )} */}
         </div>
       </div>
     );

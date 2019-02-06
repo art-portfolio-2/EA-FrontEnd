@@ -28,7 +28,8 @@ const SectionDiv = styled.div`
   }
 `;
 
-const Posts = () => {
+const Posts = (props) => {
+  console.log(props)
   return (
     <PostsContainer>
       <h2>Posts</h2>

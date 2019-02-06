@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ls from 'local-storage';
 import { Form, Input, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import NavBar from '../NavBar';
+import { connect } from 'react-redux';
+import { login } from '../../actions';
+import ls from 'local-storage'
 
 const FormContainer = styled.div`
   width: 100%;
@@ -20,7 +21,6 @@ const FormContainer = styled.div`
   background-size: cover;
 
   .loginPageLeft {
-    border: 1px solid red;
     width: 80%;
     margin: 0 50px;
     color: white;
@@ -61,6 +61,7 @@ const FormContainer = styled.div`
     }
 
     .btn {
+      min-height: 30px;
       width: 50%;
       margin: 0 auto;
       background-color: #101010;
@@ -82,15 +83,11 @@ const FormContainer = styled.div`
 `;
 
 class Login extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: '',
-      password: '',
-      user: {},
-      clicked: false,
-    };
-  }
+  state = {
+    email: '',
+    password: '',
+    clicked: false,
+  };
 
   handleChange = ev => {
     this.setState({ [ev.target.name]: ev.target.value });
@@ -106,19 +103,23 @@ class Login extends Component {
       this.setState({ clicked: true });
       return alert('Please input an email and password to login!');
     }
-    ls.set('user', user);
-    this.setState({
-      user: ls.get('user'),
-      clicked: false,
-    });
-    window.location.reload();
+    this.props.login(user);
+    ls.set('user', user)
+   
   };
 
+  componentDidUpdate() {
+    console.log('CDU')
+    if(this.props.isLoggedIn) {
+      this.props.history.push('/posts')
+    }
+    
+  }
+
   render() {
-    console.log(this.state.clicked);
     return (
       <div>
-        <NavBar loggedIn={this.props.loggedIn} logout={this.props.logout} />
+      
         <FormContainer>
           <div className="loginPageLeft">
             <h1>ARTFOLIO</h1>
@@ -181,6 +182,9 @@ class Login extends Component {
             <Link id="aTag" to="/login">
               Forgot password?
             </Link>
+            <Link id="aTag" to="/singnup">
+              Sign Up
+            </Link>
           </Form>
         </FormContainer>
       </div>
@@ -188,9 +192,16 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  isLoggedIn: state.isLoggedIn,
+});
+
 Login.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
 };
 
-export default Login;
+export default connect(
+  mapStateToProps,
+  { login },
+)(Login);

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Jumbotron } from 'reactstrap';
 
-const AboutMe = () => {
+const Profile = () => {
   return (
     <div className="aboutPage">
       <Jumbotron fluid>
         <div className="jumbo">
-          <h1>About Me</h1>
+          <h1>Profile</h1>
           <p className="lead">- Client Name</p>
         </div>
       </Jumbotron>
@@ -15,4 +15,4 @@ const AboutMe = () => {
   );
 };
 
-export default AboutMe;
+export default Profile;
