@@ -8,6 +8,10 @@ export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 export const REGISTER_START = 'REGISTER_START';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 
+export const FETCHING_POSTS = 'FETCHING_POSTS';
+export const FETCHING_POSTS_SUCCESS = 'FETCHING_POSTS_SUCCESS';
+export const FETCHING_POSTS_FAILED = 'FETCHING_POSTS_FAILED';
+
 export const login = user => dispatch => {
   console.log(user);
   console.log('action logged');
@@ -35,4 +39,14 @@ export const register = newUser => dispatch => {
     .post('https://backend-art.herokuapp.com/api/register', newUser)
     .then(res => dispatch({ type: REGISTER_SUCCESS, payload: res.data }))
     .catch(err => console.log(err.message));
+};
+
+export const fetchPosts = () => dispatch => {
+  dispatch({ type: FETCHING_POSTS });
+  axios
+    .get('https://backend-art.herokuapp.com/api/posts')
+    .then(res =>
+      dispatch({ type: FETCHING_POSTS_SUCCESS, payload: res.data }),
+    )
+    .catch(err => dispatch({ type: FETCHING_POSTS_FAILED, payload: err }));
 };

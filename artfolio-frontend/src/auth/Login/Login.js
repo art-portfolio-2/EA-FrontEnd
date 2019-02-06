@@ -158,7 +158,7 @@ class Login extends Component {
             <Link id="aTag" to="/login">
               Forgot password?
             </Link>
-            <Link id="aTag" to="/singnup">
+            <Link id="aTag" to="/signup">
               Sign Up
             </Link>
           </Form>

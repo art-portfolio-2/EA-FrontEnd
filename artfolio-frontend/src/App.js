@@ -3,7 +3,7 @@ import NavBar from './components/NavBar';
 import { Route, Redirect } from 'react-router-dom';
 import AboutMe from './components/Pages/Profile';
 import Home from './components/Pages/Home';
-import Posts from './components/Pages/Posts';
+import Posts from './components/PostContainer/Posts';
 import Login from './auth/Login/Login';
 import SignUp from './auth/SignUp/SignUp';
 import { connect } from 'react-redux';
@@ -38,19 +38,13 @@ class App extends Component {
     //if (ls.get('username')) ls.remove('username');
   };
 
-  // componentDidMount() {
-  //   if (ls.get('user')) {
-  //     this.setState({ isLoggedIn: true });
-  //   }
-  // }
-
   render() {
-     console.log(this.props)
+     console.log('this.props.posts')
     return (
       <div className="App">
         <NavBar isLoggedIn={this.props.isLoggedIn} logout={this.props.logOut} />
         {/* <Route exact path="/" component={Home} /> */}
-        <Route exact path="/posts" component={Posts} />
+        <Route path="/posts" component={Posts} />
         <Route path="/profile" component={AboutMe} />
         {/* <PrivateRoute {...this.props} isLoggedIn={this.props.isLoggedIn} /> */}
         <Route history={this.props.history} path="/login" component={Login} />
