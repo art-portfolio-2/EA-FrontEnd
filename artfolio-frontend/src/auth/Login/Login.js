@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { login } from '../../actions';
-import ls from 'local-storage';
 
 const FormContainer = styled.div`
   width: 100%;

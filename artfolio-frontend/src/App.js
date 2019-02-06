@@ -8,7 +8,7 @@ import Login from './auth/Login/Login';
 import SignUp from './auth/SignUp/SignUp';
 import { connect } from 'react-redux';
 import ls from 'local-storage';
-
+import { logOut } from './actions';
 import './App.css';
 
 // const PrivateRoute = ({ isLoggedIn, ...rest }) => {
@@ -31,11 +31,12 @@ import './App.css';
 // };
 
 class App extends Component {
-  // logout = ev => {
-  //   ev.preventDefault();
-  //   if (ls.get('user')) ls.remove('user');
-  //   this.setState({ isLoggedIn: false });
-  // };
+ 
+  logout = ev => {
+    ev.preventDefault();
+    if (ls.get('token')) ls.remove('token');
+    //if (ls.get('username')) ls.remove('username');
+  };
 
   // componentDidMount() {
   //   if (ls.get('user')) {
@@ -44,12 +45,13 @@ class App extends Component {
   // }
 
   render() {
+     console.log(this.props)
     return (
       <div className="App">
-        <NavBar isLoggedIn={this.props.isLoggedIn} logout={this.logout} />
+        <NavBar isLoggedIn={this.props.isLoggedIn} logout={this.props.logOut} />
         {/* <Route exact path="/" component={Home} /> */}
         <Route exact path="/posts" component={Posts} />
-        <Route path="/about" component={AboutMe} />
+        <Route path="/profile" component={AboutMe} />
         {/* <PrivateRoute {...this.props} isLoggedIn={this.props.isLoggedIn} /> */}
         <Route history={this.props.history} path="/login" component={Login} />
         
@@ -63,4 +65,4 @@ const mapStateToProps = state => ({
   isLoggedIn: state.isLoggedIn,
 });
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { logOut })(App);

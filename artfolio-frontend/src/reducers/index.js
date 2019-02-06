@@ -1,7 +1,7 @@
 import {
   LOGIN_START,
   LOGIN_SUCCESS,
-  LOG_OUT,
+  LOG_OUT_SUCCESS,
   REGISTER_START,
   REGISTER_SUCCESS,
 } from '../actions';
@@ -27,7 +27,7 @@ const reducer = (state = initialState, action) => {
         isLoggedIn: true,
         //users: action.payload,
       };
-    case LOG_OUT:
+    case LOG_OUT_SUCCESS:
       return {
         ...state,
         isLoggedIn: false,

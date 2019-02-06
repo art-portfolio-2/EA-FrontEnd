@@ -3,6 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 
 export default class NavBar extends React.Component {
   render() {
+    console.log(this.props)
     return (
       <div className="navBar">
         <div className="logo">
@@ -12,25 +13,25 @@ export default class NavBar extends React.Component {
         </div>
         {/* {this.props.isLoggedIn ? ( */}
           <nav className="navs">
-            <NavLink className="links na" to="/about">
+            <NavLink className="links na" to="/profile">
               Profile
             </NavLink>
-            <NavLink className="links na" to="/">
+            <NavLink className="links na" to="/posts">
               Posts
             </NavLink>
 
           </nav>
         {/* ) : null} */}
         <div className="login">
-          {/* {this.props.isLoggedIn ? ( */}
+          {localStorage.getItem('token') ? (
             <Link className="links" to="/login">
               <span onClick={this.props.logout}>Log Out</span>
             </Link>
-          {/* ) : ( */}
-            <Link className="links" to="/signup">
-              <span>Sign Up</span>
+          ) : ( 
+            <Link className="links" to="/login">
+              <span>Login</span>
             </Link>
-          {/* )} */}
+          )} 
         </div>
       </div>
     );
