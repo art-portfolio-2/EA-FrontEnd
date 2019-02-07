@@ -106,7 +106,7 @@ class PostForm extends Component {
 
   createPost = ev => {
     ev.preventDefault();
-    this.props.history.push(`/user/${this.props.user.id}`);
+    this.props.history.push(`/posts`);
     this.props.createPost(this.state);
   };
 

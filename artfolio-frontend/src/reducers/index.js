@@ -8,6 +8,9 @@ import {
   CREATING_POST,
   CREATING_POST_SUCCESS,
   CREATING_POST_FAILED,
+  DELETING_POST,
+  DELETING_POST_SUCCESS,
+  DELETING_POST_FAILED,
 } from '../actions';
 
 const initialState = {
@@ -16,16 +19,15 @@ const initialState = {
   fetchingPosts: false,
   token: null,
   creatingPost: false,
+  deletingPost: false,
   error: null,
-  user: 
-    {
-      username: '',
-      password: '',
-      fullName: '',
-      email: '',
-      userImgUrl: '',
-    },
-  
+  user: {
+    username: '',
+    password: '',
+    fullName: '',
+    email: '',
+    userImgUrl: '',
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -72,7 +74,7 @@ const reducer = (state = initialState, action) => {
         error: action.payload,
       };
 
-      case CREATING_POST:
+    case CREATING_POST:
       return {
         ...state,
         posts: [],
@@ -94,6 +96,27 @@ const reducer = (state = initialState, action) => {
         error: action.payload,
       };
 
+      case DELETING_POST:
+      return {
+        ...state,
+        posts: [],
+        deletingPost: true,
+        error: null,
+      };
+    case DELETING_POST_SUCCESS:
+      return {
+        ...state,
+    
+        deletingPost: false,
+        error: null,
+      };
+    case DELETING_POST_FAILED:
+      return {
+        ...state,
+        posts: [],
+        deletingPost: false,
+        error: action.payload,
+      };
 
     default:
       return state;

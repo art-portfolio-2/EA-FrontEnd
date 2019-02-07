@@ -16,6 +16,10 @@ export const CREATING_POST = 'CREATING_POST';
 export const CREATING_POST_SUCCESS = 'CREATING_POST_SUCCESS';
 export const CREATING_POST_FAILED = 'CREATING_POST_FAILED';
 
+export const DELETING_POST = 'DELETING_POST';
+export const DELETING_POST_SUCCESS = 'DELETING_POST_SUCCESS';
+export const DELETING_POST_FAILED = 'DELETING_POST_FAILED';
+
 export const login = user => dispatch => {
   dispatch({ type: LOGIN_START });
   axios
@@ -65,7 +69,27 @@ export const createPost = post => dispatch => {
     .catch(err =>
       dispatch({
         type: CREATING_POST_FAILED,
-        payload: err.response.data.message,
+        payload: err,
+      }),
+    );
+};
+
+export const deletePost = id => dispatch => {
+  const token = localStorage.getItem('token');
+  const request = {
+    headers: {
+      authorization: token,
+    },
+  };
+  dispatch({ type: DELETING_POST });
+  alert('Are You SURE??')
+  axios
+    .delete(`https://backend-art.herokuapp.com/api/posts/${id}`, request)
+    .then(res => dispatch({ type: DELETING_POST_SUCCESS, payload: res.data }))
+    .catch(err =>
+      dispatch({
+        type: DELETING_POST_FAILED,
+        payload: err,
       }),
     );
 };

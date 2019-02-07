@@ -112,7 +112,7 @@ class Posts extends React.Component {
           <section className="cardsContainer">
             <CardDeck>
               {this.props.posts.map(post => (
-                <Post key={post.id} post={post} />
+                <Post key={post.id} history={this.props.history} post={post} />
               ))}
             </CardDeck>
             <Button onClick={this.redirect} className='btn' >Upload your Post</Button>
