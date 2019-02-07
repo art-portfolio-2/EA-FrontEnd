@@ -129,7 +129,7 @@ class Login extends Component {
             </p>
           </div>
 
-          <Form className="loginForm">
+          <Form onSubmit={this.handleLogin} className="loginForm">
             <h3>Welcome to ArtFolio-2</h3>
             <h5>Please Login</h5>
 
@@ -152,7 +152,7 @@ class Login extends Component {
             />
 
             <br />
-            <Button className="btn" onClick={this.handleLogin}>
+            <Button className="btn" type='submit'>
               Login
             </Button>
             <Link id="aTag" to="/login">

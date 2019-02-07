@@ -5,22 +5,27 @@ import {
   FETCHING_POSTS,
   FETCHING_POSTS_SUCCESS,
   FETCHING_POSTS_FAILED,
+  CREATING_POST,
+  CREATING_POST_SUCCESS,
+  CREATING_POST_FAILED,
 } from '../actions';
 
 const initialState = {
   posts: [],
   isLoggedIn: false,
   fetchingPosts: false,
+  token: null,
+  creatingPost: false,
   error: null,
-  users: [
+  user: 
     {
-      username: 'brooks',
-      password: '1234',
-      fullName: 'Brooks Poltl',
-      email: 'bpoltl1@gmail.com',
-      userImgUrl: 'something.jpg',
+      username: '',
+      password: '',
+      fullName: '',
+      email: '',
+      userImgUrl: '',
     },
-  ],
+  
 };
 
 const reducer = (state = initialState, action) => {
@@ -29,8 +34,10 @@ const reducer = (state = initialState, action) => {
       console.log('this logged');
       return {
         ...state,
+        token: localStorage.token,
+        username: localStorage.username,
         isLoggedIn: true,
-        //users: action.payload,
+        user: action.payload.data,
       };
     case LOG_OUT_SUCCESS:
       return {
@@ -64,6 +71,29 @@ const reducer = (state = initialState, action) => {
         fetchingPosts: false,
         error: action.payload,
       };
+
+      case CREATING_POST:
+      return {
+        ...state,
+        posts: [],
+        creatingPost: true,
+        error: null,
+      };
+    case CREATING_POST_SUCCESS:
+      return {
+        ...state,
+        posts: action.payload,
+        creatingPost: false,
+        error: null,
+      };
+    case CREATING_POST_FAILED:
+      return {
+        ...state,
+        posts: [],
+        creatingPost: false,
+        error: action.payload,
+      };
+
 
     default:
       return state;

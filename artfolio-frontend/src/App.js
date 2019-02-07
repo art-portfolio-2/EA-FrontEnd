@@ -7,7 +7,7 @@ import Posts from './components/PostContainer/Posts';
 import Login from './auth/Login/Login';
 import SignUp from './auth/SignUp/SignUp';
 import { connect } from 'react-redux';
-import ls from 'local-storage';
+import PostForm from './components/PostContainer/PostForm'
 import { logOut } from './actions';
 import './App.css';
 
@@ -38,12 +38,17 @@ class App extends Component {
         <NavBar logout={this.props.logOut} />
         {/* <Route exact path="/" component={Home} /> */}
         {localStorage.getItem('token') ? (
-          <Route path="/posts" component={Posts} />
+          <Route exact path="/posts" component={Posts} />
         ) : (
           <Route history={this.props.history} path="/login" component={Login} />
         )}
         {localStorage.getItem('token') ? (
           <Route path="/profile" component={AboutMe} />
+        ) : (
+          <Route history={this.props.history} path="/login" component={Login} />
+        )}
+        {localStorage.getItem('token') ? (
+          <Route path="/posts/create-post" component={PostForm} />
         ) : (
           <Route history={this.props.history} path="/login" component={Login} />
         )}

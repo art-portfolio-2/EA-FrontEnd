@@ -38,6 +38,18 @@ const SectionDiv = styled.div`
   .cardsContainer {
     width: 80%;
     padding: 10px 50px 10px 50px;
+    .btn {
+        min-height: 30px;
+        width: 80%;
+        margin: 50px auto;
+        background-color: #101010;
+        box-shadow: 1px 1px 2px grey;
+        :hover {
+          background-color: #2c2c2b;
+          font-weight: 600;
+          box-shadow: 2px 2px 5px black;
+        }
+    }
   }
 
   .socialContainer {
@@ -77,8 +89,13 @@ class Posts extends React.Component {
     this.props.fetchPosts();
   }
 
+  redirect = ev => {
+    ev.preventDefault()
+    this.props.history.push('/posts/create-post');
+  }
+
   render() {
-    console.log(this.props.posts);
+    console.log(this.props);
     return (
       <PostsContainer>
         <Jumbotron fluid className="jumboPosts">
@@ -98,6 +115,7 @@ class Posts extends React.Component {
                 <Post key={post.id} post={post} />
               ))}
             </CardDeck>
+            <Button onClick={this.redirect} className='btn' >Upload your Post</Button>
           </section>
 
           <section className="socialContainer">
