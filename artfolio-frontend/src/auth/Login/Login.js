@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ls from 'local-storage';
 import { Form, Input, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import NavBar from '../NavBar';
+import { connect } from 'react-redux';
+import { login } from '../../actions';
 
 const FormContainer = styled.div`
   width: 100%;
@@ -20,7 +20,6 @@ const FormContainer = styled.div`
   background-size: cover;
 
   .loginPageLeft {
-    border: 1px solid red;
     width: 80%;
     margin: 0 50px;
     color: white;
@@ -61,6 +60,7 @@ const FormContainer = styled.div`
     }
 
     .btn {
+      min-height: 30px;
       width: 50%;
       margin: 0 auto;
       background-color: #101010;
@@ -82,15 +82,10 @@ const FormContainer = styled.div`
 `;
 
 class Login extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: '',
-      password: '',
-      user: {},
-      clicked: false,
-    };
-  }
+  state = {
+    username: '',
+    password: '',
+  };
 
   handleChange = ev => {
     this.setState({ [ev.target.name]: ev.target.value });
@@ -98,27 +93,30 @@ class Login extends Component {
 
   handleLogin = e => {
     e.preventDefault();
-    const user = {
-      email: this.state.email,
-      password: this.state.password,
-    };
-    if (this.state.email === '' || this.state.password === '') {
-      this.setState({ clicked: true });
-      return alert('Please input an email and password to login!');
-    }
-    ls.set('user', user);
-    this.setState({
-      user: ls.get('user'),
-      clicked: false,
-    });
-    window.location.reload();
+    // const user = {
+    //   email: this.state.email,
+    //   password: this.state.password,
+    // };
+    // if (this.state.email === '' || this.state.password === '') {
+    //   this.setState({ clicked: true });
+    //   return alert('Please input an email and password to login!');
+    // }
+    this.props.login(this.state);
+    this.props.history.push('/posts');
+    //ls.set('user', user)
   };
 
+  // componentDidUpdate() {
+  //   console.log('CDU')
+  //   if(this.props.isLoggedIn) {
+  //     this.props.history.push('/posts')
+  //   }
+
+  // }
+
   render() {
-    console.log(this.state.clicked);
     return (
       <div>
-        <NavBar loggedIn={this.props.loggedIn} logout={this.props.logout} />
         <FormContainer>
           <div className="loginPageLeft">
             <h1>ARTFOLIO</h1>
@@ -131,55 +129,37 @@ class Login extends Component {
             </p>
           </div>
 
-          <Form className="loginForm">
+          <Form onSubmit={this.handleLogin} className="loginForm">
             <h3>Welcome to ArtFolio-2</h3>
             <h5>Please Login</h5>
-            {this.state.clicked ? (
-              <Input
-                invalid
-                className="input invalid"
-                name="email"
-                type="email"
-                placeholder="Email"
-                value={this.state.email}
-                onChange={this.handleChange}
-              />
-            ) : (
-              <Input
-                className="input"
-                name="email"
-                type="email"
-                placeholder="Email"
-                value={this.state.email}
-                onChange={this.handleChange}
-              />
-            )}
-            {this.state.clicked ? (
-              <Input
-                invalid
-                className="input invalid"
-                name="password"
-                type="password"
-                placeholder="Password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              />
-            ) : (
-              <Input
-                className="input"
-                name="password"
-                type="password"
-                placeholder="Password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              />
-            )}
+
+            <Input
+              className="input"
+              name="username"
+              type="text"
+              placeholder="Username"
+              value={this.state.username}
+              onChange={this.handleChange}
+            />
+
+            <Input
+              className="input"
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+
             <br />
-            <Button className="btn" onClick={this.handleLogin}>
+            <Button className="btn" type='submit'>
               Login
             </Button>
             <Link id="aTag" to="/login">
               Forgot password?
+            </Link>
+            <Link id="aTag" to="/signup">
+              Sign Up
             </Link>
           </Form>
         </FormContainer>
@@ -188,9 +168,16 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  isLoggedIn: state.isLoggedIn,
+});
+
 Login.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
 };
 
-export default Login;
+export default connect(
+  mapStateToProps,
+  { login },
+)(Login);

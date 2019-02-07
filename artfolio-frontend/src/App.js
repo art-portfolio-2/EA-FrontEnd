@@ -1,29 +1,71 @@
 import React, { Component } from 'react';
 import NavBar from './components/NavBar';
 import { Route } from 'react-router-dom';
-import AboutMe from './components/Pages/AboutMe';
+import AboutMe from './components/Pages/Profile';
 import Home from './components/Pages/Home';
-import Contact from './components/Pages/Contact';
-import Posts from './components/Pages/Posts';
-import authenticate from './components/Authentication/Authenticate';
-import Login from './components/Login/Login';
-
+import Posts from './components/PostContainer/Posts';
+import Login from './auth/Login/Login';
+import SignUp from './auth/SignUp/SignUp';
+import { connect } from 'react-redux';
+import PostForm from './components/PostContainer/PostForm'
+import { logOut } from './actions';
 import './App.css';
+
+// const PrivateRoute = ({ isLoggedIn, ...rest }) => {
+//   if (rest.location.pathname === '/login') {
+//     return null;
+//   }
+//   return (
+//   //   <Route
+//   //     {...rest}
+//   //     render={props =>
+//   //       !isLoggedIn ? (
+//   //         <Posts {...props} />
+//   //       ) : (
+//   //         //<Login {...props}/> }
+//   //         <Redirect to={{ pathname: '/login' }} />
+//   //       )
+//   //     }
+//   //   />
+//   // );
+// };
 
 class App extends Component {
   render() {
-    console.log(this.props)
+    console.log('this.props.posts');
     return (
       <div className="App">
-        <NavBar loggedIn={this.props.loggedIn} logout={this.props.logout}/>
-        <Route exact path="/" component={Home} />
-        <Route path="/about" component={AboutMe} />
-        <Route path="/posts" component={Posts} />
-        <Route path="/contact" component={Contact} />
-        <Route path="/login" component={Login} />
+        <NavBar logout={this.props.logOut} />
+        {/* <Route exact path="/" component={Home} /> */}
+        {localStorage.getItem('token') ? (
+          <Route exact path="/posts" component={Posts} />
+        ) : (
+          <Route history={this.props.history} path="/login" component={Login} />
+        )}
+        {localStorage.getItem('token') ? (
+          <Route path="/profile" component={AboutMe} />
+        ) : (
+          <Route history={this.props.history} path="/login" component={Login} />
+        )}
+        {localStorage.getItem('token') ? (
+          <Route path="/posts/create-post" component={PostForm} />
+        ) : (
+          <Route history={this.props.history} path="/login" component={Login} />
+        )}
+
+        {/* <PrivateRoute {...this.props} isLoggedIn={this.props.isLoggedIn} /> */}
+
+        <Route path="/signup" component={SignUp} />
       </div>
     );
   }
 }
 
-export default authenticate(App)(Login);
+const mapStateToProps = state => ({
+  isLoggedIn: state.isLoggedIn,
+});
+
+export default connect(
+  mapStateToProps,
+  { logOut },
+)(App);
