@@ -13,12 +13,18 @@ export default class NavBar extends React.Component {
         </div>
         {/* {this.props.isLoggedIn ? ( */}
           <nav className="navs">
-            <NavLink className="links na" to="/profile">
+          {localStorage.getItem('token') ? <div><NavLink className="links na" to="/profile">
               Profile
             </NavLink>
             <NavLink className="links na" to="/posts">
               Posts
+            </NavLink></div> : <div><NavLink className="links na" to="/login">
+              Profile
             </NavLink>
+            <NavLink className="links na" to="/login">
+              Posts
+            </NavLink></div>}
+            
 
           </nav>
         {/* ) : null} */}
