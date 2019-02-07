@@ -20,6 +20,10 @@ export const DELETING_POST = 'DELETING_POST';
 export const DELETING_POST_SUCCESS = 'DELETING_POST_SUCCESS';
 export const DELETING_POST_FAILED = 'DELETING_POST_FAILED';
 
+export const FETCHING_USERS = 'FETCHING_USERS';
+export const FETCHING_USERS_SUCCESS = 'FETCHING_USERS_SUCCESS';
+export const FETCHING_USERS_FAILED = 'FETCHING_USERS_FAILED';
+
 export const login = user => dispatch => {
   dispatch({ type: LOGIN_START });
   axios
@@ -92,4 +96,12 @@ export const deletePost = id => dispatch => {
         payload: err,
       }),
     );
+};
+
+export const fetchUsers = () => dispatch => {
+  dispatch({ type: FETCHING_USERS });
+  axios
+    .get(`https://backend-art.herokuapp.com/api/users`)
+    .then(res => dispatch({ type: FETCHING_USERS_SUCCESS, payload: res.data }))
+    .catch(err => dispatch({ type: FETCHING_USERS_FAILED, payload: err }));
 };

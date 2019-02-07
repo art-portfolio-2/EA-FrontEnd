@@ -11,16 +11,21 @@ import {
   DELETING_POST,
   DELETING_POST_SUCCESS,
   DELETING_POST_FAILED,
+  FETCHING_USERS,
+FETCHING_USERS_SUCCESS,
+FETCHING_USERS_FAILED,
 } from '../actions';
 
 const initialState = {
   posts: [],
   isLoggedIn: false,
   fetchingPosts: false,
+  fetchingUsers: false,
   token: null,
   creatingPost: false,
   deletingPost: false,
   error: null,
+  userProfile: [],
   user: {
     username: '',
     password: '',
@@ -115,6 +120,28 @@ const reducer = (state = initialState, action) => {
         ...state,
         posts: [],
         deletingPost: false,
+        error: action.payload,
+      };
+
+      case FETCHING_USERS:
+      return {
+        ...state,
+        userProfile: [],
+        fetchingUser: true,
+        error: null,
+      };
+    case FETCHING_USERS_SUCCESS:
+      return {
+        ...state,
+        userProfile: action.payload,
+        fetchingUser: false,
+        error: null,
+      };
+    case FETCHING_USERS_FAILED:
+      return {
+        ...state,
+        userProfile: [],
+        fetchingUser: false,
         error: action.payload,
       };
 
