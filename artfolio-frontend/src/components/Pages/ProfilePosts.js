@@ -5,6 +5,12 @@ import styled from 'styled-components';
 const CardDiv = styled.div`
   padding: 20px 0;
   margin: 20px 30px;
+  .actionSpan {
+    :hover {
+      color: red;
+    }
+  }
+
   .postCard {
     box-shadow: 1px 1px 7px black;
 
@@ -31,15 +37,23 @@ class ProfilePosts extends Component {
     return (
       <CardDiv>
         <Card className="postCard" style={{ cursor: 'pointer' }}>
-          <span
+          {this.props.post.userId === this.props.id ? 
+          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '0 10px'}}>
+            <span 
+            className='actionSpan'
             style={{ cursor: 'pointer' }}
             onClick={ev => this.props.update(ev, this.props.post)}
           >
             Update
           </span>
-          <span style={{ cursor: 'pointer' }} onClick={this.deletePost}>
+          <span 
+          className='actionSpan'
+          style={{ cursor: 'pointer' }} 
+          onClick={this.deletePost}>
             delete
           </span>
+          </div>
+           : null}
           <CardImg
             top
             style={{ width: '256px', height: '180px' }}

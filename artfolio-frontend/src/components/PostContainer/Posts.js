@@ -11,7 +11,8 @@ import {
 } from 'reactstrap';
 import Post from './Post';
 import { connect } from 'react-redux';
-import { fetchPosts, updatePost } from '../../actions';
+import { fetchPosts, updatePost, fetchUserPosts,
+  fetchUser } from '../../actions';
 
 const PostsContainer = styled.div`
   background-image: url('https://images.pexels.com/photos/134469/pexels-photo-134469.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
@@ -94,7 +95,10 @@ const SectionDiv = styled.div`
 
 class Posts extends React.Component {
   componentDidMount() {
+    const userId = Number(localStorage.getItem('id'));
     this.props.fetchPosts();
+    this.props.fetchUser(userId);
+    this.props.fetchUserPosts(userId);
   }
 
   update = (ev, post) => {
@@ -114,6 +118,8 @@ class Posts extends React.Component {
   }
 
   render() {
+    console.log(this.props.user.id);
+    console.log(this.props.userPosts);
     return (
       <PostsContainer className='postsPage'>
         <Jumbotron fluid className="jumboPosts">
@@ -131,7 +137,7 @@ class Posts extends React.Component {
           <Button onClick={this.redirect} className='btn' >Upload your Post</Button>
             <CardDeck>
               {this.props.posts.map(post => (
-                <Post key={post.id} history={this.props.history} update={this.update} post={post} />
+                <Post id={this.props.user.id} key={post.id} history={this.props.history} update={this.update} post={post} />
               ))}
             </CardDeck>
             <Button onClick={this.redirect} className='btn' >Upload your Post</Button>
@@ -191,9 +197,11 @@ class Posts extends React.Component {
 }
 const mapStateToProps = state => ({
   posts: state.posts,
+  user: state.user,
+  userPosts: state.userPosts,
 });
 
 export default connect(
   mapStateToProps,
-  { fetchPosts, updatePost },
+  { fetchPosts, updatePost, fetchUserPosts, fetchUser },
 )(Posts);

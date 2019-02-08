@@ -9,7 +9,11 @@ const CardDiv = styled.div`
 
   .postCard {
     box-shadow: 1px 1px 7px black;
-
+    .actionSpan {
+    :hover {
+      color: red;
+    }
+    }
     :hover {
       animation-name: trans;
       animation-duration: 0.5s;
@@ -31,7 +35,7 @@ class Post extends Component {
   deletePost = ev => {
     ev.preventDefault();
     console.log(this.props.post.id);
-    this.props.deletePost(this.props.post.id)
+    this.props.deletePost(this.props.post.id);
     this.props.location.push(`/posts`);
   };
 
@@ -41,9 +45,32 @@ class Post extends Component {
 
     return (
       <CardDiv>
-        <Card className="postCard" style={{cursor: 'pointer'}}>
-        <span style={{cursor: 'pointer'}} onClick={ev => this.props.update(ev, this.props.post)}>Update</span>
-          <span style={{cursor: 'pointer'}} onClick={this.deletePost}>delete</span>
+        <Card className="postCard" style={{ cursor: 'pointer' }}>
+          {this.props.post.userId === this.props.id ? (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                padding: '0 10px',
+              }}
+            >
+              <span
+                className="actionSpan"
+                style={{ cursor: 'pointer' }}
+                onClick={ev => this.props.update(ev, this.props.post)}
+              >
+                Update
+              </span>
+              <span
+                className="actionSpan"
+                style={{ cursor: 'pointer' }}
+                onClick={this.deletePost}
+              >
+                delete
+              </span>
+            </div>
+          ) : null}
           <CardImg
             top
             style={{ width: '256px', height: '180px' }}
@@ -52,7 +79,9 @@ class Post extends Component {
             alt={this.props.post.postName}
           />
           <CardBody style={{ width: '256px', height: '100px' }}>
-            <CardTitle><h6>{this.props.post.postName}</h6></CardTitle>
+            <CardTitle>
+              <h6>{this.props.post.postName}</h6>
+            </CardTitle>
             <CardSubtitle>
               {this.props.post.description === null ||
               this.props.post.description === '' ? (

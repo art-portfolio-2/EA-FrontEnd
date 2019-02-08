@@ -75,7 +75,8 @@ class Profile extends React.Component {
   }
 
   render() {
-
+    console.log(this.props.user.id);
+    console.log(this.props.userPosts);
     return (
       <ProfileContainer className="profilePage">
         <Jumbotron fluid className="jumboProfile">
@@ -128,6 +129,7 @@ class Profile extends React.Component {
                       key={post.id}
                       history={this.props.history}
                       post={post}
+                      id={this.props.user.id}
                     />
                   ))}
                 </CardDeck>
