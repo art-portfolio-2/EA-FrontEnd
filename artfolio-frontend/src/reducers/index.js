@@ -27,6 +27,7 @@ const initialState = {
   posts: [],
   isLoggedIn: false,
   fetchingPosts: false,
+  fetchingUserPosts: false,
   fetchingUser: false,
   loginFailed: false,
   isLoggingIn: false,
@@ -194,21 +195,21 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         userPosts: [],
-        fetchingPosts: true,
+        fetchingUserPosts: true,
         error: null,
       };
     case FETCHING_USER_POSTS_SUCCESS:
       return {
         ...state,
         userPosts: action.payload,
-        fetchingPosts: false,
+        fetchingUserPosts: false,
         error: null,
       };
     case FETCHING_USER_POSTS_FAILED:
       return {
         ...state,
         userPosts: [],
-        fetchingPosts: false,
+        fetchingUserPosts: false,
         error: action.payload,
       };
 

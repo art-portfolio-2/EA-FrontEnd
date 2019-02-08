@@ -44,13 +44,13 @@ class ProfilePosts extends Component {
             style={{ cursor: 'pointer' }}
             onClick={ev => this.props.update(ev, this.props.post)}
           >
-            Update
+            <i class="fas fa-pencil-alt fa-lg"></i>
           </span>
           <span 
           className='actionSpan'
           style={{ cursor: 'pointer' }} 
           onClick={this.deletePost}>
-            delete
+            <i class="fas fa-trash-alt fa-lg"></i>
           </span>
           </div>
            : null}

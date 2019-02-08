@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { login, toggleLogin } from '../../actions';
 
-
 const FormContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -19,11 +18,45 @@ const FormContainer = styled.div`
   background-image: url('https://images.pexels.com/photos/1595242/pexels-photo-1595242.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
   background-repeat: no-repeat;
   background-size: cover;
+  font-family: Dhurjati, sans-serif;
+  font-size: 20px;
 
   .loginPageLeft {
     width: 80%;
     margin: 0 50px;
     color: white;
+    animation-name: fadeOut;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    border-radius: 7px;
+    padding: 10px 30px;
+
+    :hover {
+      animation-name: fadeIn;
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
+      box-shadow: 1px 1px 5px #0f0f0f;
+    }
+    @keyframes fadeIn {
+      from {
+        transform: scale(1, 1);
+      }
+      to {
+        transform: scale(1.1, 1.1);
+        background-color: rgb(12, 12, 12, 0.7);
+        box-shadow: 1px 1px 5px black;
+      }
+    }
+    @keyframes fadeOut {
+      from {
+        transform: scale(1.1, 1.1);
+        background-color: rgb(12, 12, 12, 0.7);
+        box-shadow: 1px 1px 5px black;
+      }
+      to {
+        transform: scale(1, 1);
+      }
+    }
   }
 
   .loginForm {
@@ -49,12 +82,14 @@ const FormContainer = styled.div`
     h5 {
       font-weight: 600;
       text-align: center;
-      padding: 10px 40px;
+      padding: 10px 40px 0px 40px;
+      margin-bottom: -5px;
     }
     .input {
-      margin: 5px auto;
+      margin: 5px auto 5px auto;
       width: 70%;
       border: 2px solid rgb(102, 102, 102);
+      font-size: 22px;
     }
     .invalid {
       border: 2px solid red;
@@ -64,11 +99,11 @@ const FormContainer = styled.div`
       min-height: 30px;
       width: 50%;
       margin: 0 auto;
+      padding: 0;
       background-color: #101010;
       box-shadow: 2px 2px 5px grey;
       :hover {
         background-color: #2c2c2b;
-        font-weight: 600;
         box-shadow: 2px 2px 5px black;
       }
     }
@@ -117,7 +152,7 @@ class Login extends Component {
       <div>
         <FormContainer>
           <div className="loginPageLeft">
-            <h1>ARTFOLIO</h1>
+            <h1 style={{ fontFamily: 'Piedra, cursive' }}>ARTFOLIO</h1>
             <p>
               {' '}
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -128,7 +163,20 @@ class Login extends Component {
           </div>
 
           <Form onSubmit={this.handleLogin} className="loginForm">
-            <h3>Welcome to ArtFolio-2</h3>
+            <h3
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                marginTop: '20px',
+              }}
+            >
+              Welcome to{' '}
+              <span
+                style={{ fontFamily: 'Piedra, cursive', marginTop: '10px' }}
+              >
+                ArtFolio
+              </span>
+            </h3>
             <h5>Please Login</h5>
 
             <Input
@@ -156,7 +204,8 @@ class Login extends Component {
             <Link id="aTag" to="/login">
               Forgot password?
             </Link>
-            <Link id="aTag" to="/signup">
+            <span>Dont have an account?</span>
+            <Link style={{marginTop: '-5px'}} id="aTag" to="/signup">
               Sign Up
             </Link>
           </Form>

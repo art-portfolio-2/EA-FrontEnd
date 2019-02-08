@@ -14,9 +14,7 @@ const ProfileContainer = styled.div`
   background-attachment: fixed;
   #scroller {
       :hover {
-          background-color: #2c2c2b;
-          font-weight: 600;
-          box-shadow: 3px 3px 5px black;
+          text-shadow: 3px 3px 5px black;
           transform: scale(1.1, 1.1)
         }
     }
@@ -90,7 +88,7 @@ class Profile extends React.Component {
         </Jumbotron>
 
         {this.props.fetchingUser ? (
-          <Loader type="Bars" color="green" height={80} width={80} />
+          <Loader type="Bars" color="red" height={80} width={80} />
         ) : (
           <MainSection>
             <div>
@@ -137,7 +135,20 @@ class Profile extends React.Component {
             </section>
           </MainSection>
         )}
-        <span id='scroller' onClick={this.scroll} style={{color: 'white', position: "fixed", bottom: '15px', right: '20px', border: '1px solid grey', background: 'grey', padding: '5px 10px', borderRadius: '10px', boxShadow: '1px 1px 2px black', cursor: 'pointer'}}>Scroll Up</span>
+        <span 
+        
+        onClick={this.scroll} 
+          style={{
+            position: "fixed",
+            bottom: '15px',
+            right: '20px',
+            cursor: 'pointer'
+          }}>
+          <i
+            id='scroller'
+            style={{ textShadow: '1px 1px 2px black', color: 'grey' }}
+            class="fas fa-arrow-alt-circle-up fa-3x"></i>
+        </span>
       </ProfileContainer>
     );
   }
