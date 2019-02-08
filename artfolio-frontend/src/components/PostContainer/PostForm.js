@@ -103,6 +103,10 @@ class PostForm extends Component {
     description: '',
   };
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+}
+
   createPost = ev => {
     ev.preventDefault();
     this.props.createPost(this.state);

@@ -12,6 +12,14 @@ const ProfileContainer = styled.div`
   height: 100%;
   background-size: cover;
   background-attachment: fixed;
+  #scroller {
+      :hover {
+          background-color: #2c2c2b;
+          font-weight: 600;
+          box-shadow: 3px 3px 5px black;
+          transform: scale(1.1, 1.1)
+        }
+    }
 
   .jumboProfile {
     background-color: rgb(12, 12, 12, 0.7);
@@ -56,6 +64,7 @@ class Profile extends React.Component {
   };
 
   componentDidMount = () => {
+    window.scrollTo(0, 0);
     const userId = Number(localStorage.getItem('id'));
     this.props.fetchUser(userId);
     this.props.fetchUserPosts(userId);
@@ -83,6 +92,7 @@ class Profile extends React.Component {
               <section className="userProfile">
                 <div className="profilePic">
                   <img
+                  alt={this.props.user.username}
                     style={{
                       width: '250px',
                       height: '250px',
@@ -121,6 +131,7 @@ class Profile extends React.Component {
             </section>
           </MainSection>
         )}
+        <span id='scroller' onClick={this.scroll} style={{color: 'white', position: "fixed", bottom: '15px', right: '20px', border: '1px solid grey', background: 'grey', padding: '5px 10px', borderRadius: '10px', boxShadow: '1px 1px 2px black', cursor: 'pointer'}}>Scroll Up</span>
       </ProfileContainer>
     );
   }

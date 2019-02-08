@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input, Button, Spinner } from 'reactstrap';
+import { Form, Input, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { login, toggleLogin } from '../../actions';
+
 
 const FormContainer = styled.div`
   width: 100%;
@@ -106,25 +107,14 @@ class Login extends Component {
     //   return alert('Please input an email and password to login!');
     // }
     this.props.login(this.state);
-    !this.props.isLoggingIn && 
-      this.props.history.push('/profile')
-    
+    !this.props.isLoggingIn && this.props.history.push('/profile');
+
     //ls.set('user', user)
   };
 
-  // componentDidUpdate() {
-  //   console.log('CDU')
-  //   if(this.props.isLoggedIn) {
-  //     this.props.history.push('/posts')
-  //   }
-
-  // }
-
   render() {
-    
     return (
       <div>
-        
         <FormContainer>
           <div className="loginPageLeft">
             <h1>ARTFOLIO</h1>

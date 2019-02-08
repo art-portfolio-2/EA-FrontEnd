@@ -10,33 +10,13 @@ import PostForm from './components/PostContainer/PostForm';
 import { logOut } from './actions';
 import './App.css';
 
-// const PrivateRoute = ({ isLoggedIn, ...rest }) => {
-//   if (rest.location.pathname === '/login') {
-//     return null;
-//   }
-//   return (
-//   //   <Route
-//   //     {...rest}
-//   //     render={props =>
-//   //       !isLoggedIn ? (
-//   //         <Posts {...props} />
-//   //       ) : (
-//   //         //<Login {...props}/> }
-//   //         <Redirect to={{ pathname: '/login' }} />
-//   //       )
-//   //     }
-//   //   />
-//   // );
-// };
 
 class App extends Component {
   render() {
-    console.log(this.props);
     return (
       <div className="App">
         <NavBar logout={this.props.logOut} />
         {this.props.loginFailed && this.props.history.push('/login') }
-        {/* <Route exact path="/" component={Home} /> */}
         {localStorage.getItem('token') ? (
           <Route exact path="/posts" component={Posts} />
         ) : (
@@ -52,8 +32,6 @@ class App extends Component {
         ) : (
           <Route history={this.props.history} path="/login" component={Login} />
         )}
-
-        {/* <PrivateRoute {...this.props} isLoggedIn={this.props.isLoggedIn} /> */}
 
         <Route path="/signup" component={SignUp} />
         <Route exact path='/' component={Profile}/>

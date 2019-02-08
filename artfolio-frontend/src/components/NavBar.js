@@ -3,7 +3,6 @@ import { NavLink, Link } from 'react-router-dom';
 
 export default class NavBar extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <div className="navBar">
         <div className="logo">
