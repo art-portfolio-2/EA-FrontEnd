@@ -8,29 +8,42 @@ import {
   FETCHING_POSTS,
   FETCHING_POSTS_SUCCESS,
   FETCHING_POSTS_FAILED,
+  FETCHING_USER_POSTS,
+FETCHING_USER_POSTS_SUCCESS,
+FETCHING_USER_POSTS_FAILED,
   CREATING_POST,
   CREATING_POST_SUCCESS,
   CREATING_POST_FAILED,
   DELETING_POST,
   DELETING_POST_SUCCESS,
   DELETING_POST_FAILED,
-  FETCHING_USERS,
-FETCHING_USERS_SUCCESS,
-FETCHING_USERS_FAILED,
+  FETCHING_USER,
+  FETCHING_USER_SUCCESS,
+  FETCHING_USER_FAILED,
+  UPDATING_POST_SUCCESSFUL,
 } from '../actions';
 
 const initialState = {
   posts: [],
   isLoggedIn: false,
   fetchingPosts: false,
-  fetchingUsers: false,
+  fetchingUser: false,
   loginFailed: false,
   isLoggingIn: false,
   token: null,
   creatingPost: false,
   deletingPost: false,
+  userPosts: [],
   error: null,
-  userProfile: [],
+  userProfile: {
+    id: null,
+    username: '',
+    password: '',
+    fullName: '',
+    email: '',
+    userImgUrl: '',
+    posts: [],
+  },
   user: {
     id: null,
     username: '',
@@ -44,10 +57,10 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_START:
-    return {
-      ...state,
-      isLoggingIn: true,
-    }
+      return {
+        ...state,
+        isLoggingIn: true,
+      };
     case LOGIN_SUCCESS:
       return {
         ...state,
@@ -57,20 +70,20 @@ const reducer = (state = initialState, action) => {
         isLoggedIn: true,
         isLoggingIn: false,
         loginFailed: false,
-        user: action.payload.data,
+        user: action.payload,
       };
-      case LOGIN_FAILED:
+    case LOGIN_FAILED:
       return {
         ...state,
         loginFailed: true,
         isLoggedIn: false,
         error: action.payload,
       };
-      case TOGGLE_FAILED_LOGIN:
+    case TOGGLE_FAILED_LOGIN:
       return {
         ...state,
         loginFailed: false,
-      }
+      };
 
     case LOG_OUT_SUCCESS:
       return {
@@ -127,7 +140,7 @@ const reducer = (state = initialState, action) => {
         error: action.payload,
       };
 
-      case DELETING_POST:
+    case DELETING_POST:
       return {
         ...state,
         posts: [],
@@ -137,7 +150,7 @@ const reducer = (state = initialState, action) => {
     case DELETING_POST_SUCCESS:
       return {
         ...state,
-    
+
         deletingPost: false,
         error: null,
       };
@@ -149,25 +162,53 @@ const reducer = (state = initialState, action) => {
         error: action.payload,
       };
 
-      case FETCHING_USERS:
+    case FETCHING_USER:
       return {
         ...state,
-        userProfile: [],
+    
         fetchingUser: true,
         error: null,
       };
-    case FETCHING_USERS_SUCCESS:
+    case FETCHING_USER_SUCCESS:
       return {
         ...state,
-        userProfile: action.payload,
+        user: action.payload,
         fetchingUser: false,
         error: null,
       };
-    case FETCHING_USERS_FAILED:
+    case FETCHING_USER_FAILED:
       return {
         ...state,
-        userProfile: [],
         fetchingUser: false,
+        error: action.payload,
+      };
+
+    case UPDATING_POST_SUCCESSFUL:
+      return {
+        ...state,
+        postUpdated: action.payload,
+        postUpdating: true,
+      };
+
+      case FETCHING_USER_POSTS:
+      return {
+        ...state,
+        userPosts: [],
+        fetchingPosts: true,
+        error: null,
+      };
+    case FETCHING_USER_POSTS_SUCCESS:
+      return {
+        ...state,
+        userPosts: action.payload,
+        fetchingPosts: false,
+        error: null,
+      };
+    case FETCHING_USER_POSTS_FAILED:
+      return {
+        ...state,
+        userPosts: [],
+        fetchingPosts: false,
         error: action.payload,
       };
 

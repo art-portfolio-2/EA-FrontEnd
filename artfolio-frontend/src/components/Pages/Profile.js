@@ -1,31 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  // CardDeck,
-  Card,
-  // Button,
-  // CardTitle,
-  // CardText,
-  // Form,
-  // FormGroup,
-  // Label,
-  // Input,
-  Jumbotron,
-  Container,
-} from 'reactstrap';
-import Post from '../PostContainer/Post';
+import { CardDeck, Jumbotron, Container } from 'reactstrap';
+import Loader from 'react-loader-spinner';
+import ProfilePosts from './ProfilePosts';
 import { connect } from 'react-redux';
-import { fetchUsers, fetchPosts } from '../../actions';
+import { fetchUser, fetchPosts, fetchUserPosts } from '../../actions';
 
 const ProfileContainer = styled.div`
   background-image: url('https://images.pexels.com/photos/134469/pexels-photo-134469.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
   background-repeat: no-repeat;
+  height: 100%;
   background-size: cover;
   background-attachment: fixed;
+  #scroller {
+      :hover {
+          background-color: #2c2c2b;
+          font-weight: 600;
+          box-shadow: 3px 3px 5px black;
+          transform: scale(1.1, 1.1)
+        }
+    }
 
   .jumboProfile {
     background-color: rgb(12, 12, 12, 0.7);
-    border: 1px solid red;
     h1 {
       color: white;
     }
@@ -36,41 +33,45 @@ const ProfileContainer = styled.div`
 `;
 
 const MainSection = styled.div`
-  border: 1px solid red;
-  height: 500px;
+  height: 100%;
 
   .userProfile {
     display: flex;
     flex-direction: row;
-    border: 1px solid red;
     background-color: rgb(252, 252, 252, 0.8);
+    justify-content: center;
+    align-content: center;
+    height: 300px;
 
     .profilePic {
-      display: inline;
-      margin: 10px 30px;
-      border: 1px solid blue;
+      display: block;
+      margin: 30px 20px 0px 30px;
     }
     .profileInfo {
-      margin: 50px 20px;
-      text-align: justify;
-      border: 1px solid red;
+      display: inline-block;
+      margin: 100px 20px 20px 20px;
+      text-align: center;
     }
   }
 
   .userPosts {
-    border: 1px solid red;
   }
 `;
 
 class Profile extends React.Component {
+  state = {
+    id: null,
+  };
+
   componentDidMount = () => {
-    this.props.fetchPosts();
-    this.props.fetchUsers(this.props.user.id);
+    window.scrollTo(0, 0);
+    const userId = Number(localStorage.getItem('id'));
+    this.props.fetchUser(userId);
+    this.props.fetchUserPosts(userId);
   };
 
   render() {
-    console.log(this.props.user.id);
-    console.log(this.props);
+
     return (
       <ProfileContainer className="profilePage">
         <Jumbotron fluid className="jumboProfile">
@@ -83,59 +84,66 @@ class Profile extends React.Component {
           </Container>
         </Jumbotron>
 
-        <MainSection>
-          <div>
-            <section className="userProfile">
-              <div className="profilePic">
-                <img
-                  style={{
-                    width: '250px',
-                    height: '250px',
-                    border: '1px solid blue',
-                    borderRadius: '50%',
-                  }}
-                  src={this.props.user.userImgUrl}
-                />
-              </div>
-              <div className="profileInfo">
-                <h4>@{this.props.user.username}</h4>
-                <h5>{this.props.user.fullName}</h5>
-                <p>{this.props.user.email}</p>
-              </div>
-            </section>
-          </div>
-
-          <section className="userPosts">
-            {this.props.userProfile.posts === undefined ? (
-              <div style={{border: "1px solid red", padding: '40px 40px 0 0'}}>
-                <h3 style={{color:'red',}}>Server Error, Cant find Post!</h3>
-                <p  style={{color:'red'}}>Please logout and try again!</p>
-              </div>
-            ) : (
-              <div>
-                {this.props.userProfile.posts.map(post => (
-                  <Post
-                    key={post.id}
-                    history={this.props.history}
-                    post={post}
+        {this.props.fetchingUser ? (
+          <Loader type="Bars" color="green" height={80} width={80} />
+        ) : (
+          <MainSection>
+            <div>
+              <section className="userProfile">
+                <div className="profilePic">
+                  <img
+                  alt={this.props.user.username}
+                    style={{
+                      width: '250px',
+                      height: '250px',
+                      borderRadius: '50%',
+                    }}
+                    src={this.props.user.userImgUrl}
                   />
-                ))}
-              </div>
-            )}
-          </section>
-        </MainSection>
+                </div>
+                <div className="profileInfo">
+                  <h4>@{this.props.user.username}</h4>
+                  <h5>{this.props.user.fullName}</h5>
+                  <p>{this.props.user.email}</p>
+                </div>
+              </section>
+            </div>
+
+            <section className="userPosts">
+              {this.props.userPosts === undefined ? (
+                <div style={{ padding: '40px 40px 0 0' }}>
+                  <h3 style={{ color: 'red' }}>
+                    Server Error, Cant find Post!
+                  </h3>
+                  <p style={{ color: 'red' }}>Please logout and try again!</p>
+                </div>
+              ) : (
+                <CardDeck>
+                  {this.props.userPosts.map(post => (
+                    <ProfilePosts
+                      key={post.id}
+                      history={this.props.history}
+                      post={post}
+                    />
+                  ))}
+                </CardDeck>
+              )}
+            </section>
+          </MainSection>
+        )}
+        <span id='scroller' onClick={this.scroll} style={{color: 'white', position: "fixed", bottom: '15px', right: '20px', border: '1px solid grey', background: 'grey', padding: '5px 10px', borderRadius: '10px', boxShadow: '1px 1px 2px black', cursor: 'pointer'}}>Scroll Up</span>
       </ProfileContainer>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  posts: state.posts,
-  userProfile: state.userProfile,
+  fetchingUser: state.fetchingUser,
   user: state.user,
+  userPosts: state.userPosts,
 });
 
 export default connect(
   mapStateToProps,
-  { fetchUsers, fetchPosts },
+  { fetchUser, fetchPosts, fetchUserPosts },
 )(Profile);

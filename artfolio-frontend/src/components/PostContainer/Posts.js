@@ -11,7 +11,7 @@ import {
 } from 'reactstrap';
 import Post from './Post';
 import { connect } from 'react-redux';
-import { fetchPosts } from '../../actions';
+import { fetchPosts, updatePost } from '../../actions';
 
 const PostsContainer = styled.div`
   background-image: url('https://images.pexels.com/photos/134469/pexels-photo-134469.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
@@ -48,6 +48,14 @@ const SectionDiv = styled.div`
           background-color: #2c2c2b;
           font-weight: 600;
           box-shadow: 2px 2px 5px black;
+        }
+    }
+    #scroller {
+      :hover {
+          background-color: #2c2c2b;
+          font-weight: 600;
+          box-shadow: 3px 3px 5px black;
+          transform: scale(1.1, 1.1)
         }
     }
   }
@@ -89,13 +97,23 @@ class Posts extends React.Component {
     this.props.fetchPosts();
   }
 
+  update = (ev, post) => {
+    ev.preventDefault();
+    this.props.history.push('/posts');
+    this.props.updatePost(post);
+  }
+
+  scroll = ev => {
+    ev.preventDefault()
+    window.scrollTo(0, 0);
+  }
+
   redirect = ev => {
     ev.preventDefault()
     this.props.history.push('/posts/create-post');
   }
 
   render() {
-    console.log(this.props);
     return (
       <PostsContainer className='postsPage'>
         <Jumbotron fluid className="jumboPosts">
@@ -110,12 +128,14 @@ class Posts extends React.Component {
 
         <SectionDiv>
           <section className="cardsContainer">
+          <Button onClick={this.redirect} className='btn' >Upload your Post</Button>
             <CardDeck>
               {this.props.posts.map(post => (
-                <Post key={post.id} history={this.props.history} post={post} />
+                <Post key={post.id} history={this.props.history} update={this.update} post={post} />
               ))}
             </CardDeck>
             <Button onClick={this.redirect} className='btn' >Upload your Post</Button>
+            <span id='scroller' onClick={this.scroll} style={{color: 'white', position: "fixed", bottom: '15px', right: '20px', border: '1px solid grey', background: 'grey', padding: '5px 10px', borderRadius: '10px', boxShadow: '1px 1px 2px black', cursor: 'pointer'}}>Scroll Up</span>
           </section>
 
           <section className="socialContainer">
@@ -159,7 +179,9 @@ class Posts extends React.Component {
                   content.
                 </CardText>
                 <Button href='https://www.linkedin.com/' target='_blank' className="btn">LinkedIn</Button>
+                
               </Card>
+              
             </div>
           </section>
         </SectionDiv>
@@ -173,5 +195,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchPosts },
+  { fetchPosts, updatePost },
 )(Posts);
