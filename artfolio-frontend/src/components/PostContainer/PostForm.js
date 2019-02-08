@@ -120,7 +120,6 @@ class PostForm extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <FormContainer>
         <Jumbotron fluid className="jumboPosts">
