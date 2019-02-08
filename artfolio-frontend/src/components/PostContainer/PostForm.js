@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  CardDeck,
   Card,
   Button,
   CardTitle,
@@ -106,8 +105,8 @@ class PostForm extends Component {
 
   createPost = ev => {
     ev.preventDefault();
-    this.props.history.push(`/posts`);
     this.props.createPost(this.state);
+    this.props.history.push(`/posts`);
   };
 
   handleChanges = ev => {
@@ -182,14 +181,14 @@ class PostForm extends Component {
           <section className="socialContainer">
             <div>
               <Card body className="text-left socialCard">
-                <CardTitle>
+              <CardTitle>
                   <h5>Facebook</h5>
                 </CardTitle>
                 <CardText className="cardText">
                   With supporting text below as a natural lead-in to additional
                   content.
                 </CardText>
-                <Button className="btn">Go somewhere</Button>
+                <Button href='https://www.facebook.com/' target='_blank' className="btn">Facebook</Button>
               </Card>
               <Card body className="text-left socialCard">
                 <CardTitle>
@@ -199,7 +198,7 @@ class PostForm extends Component {
                   With supporting text below as a natural lead-in to additional
                   content.
                 </CardText>
-                <Button className="btn">Go somewhere</Button>
+                <Button href='https://www.instagram.com' target='_blank' className="btn">Instagram</Button>
               </Card>
               <Card body className="text-left socialCard">
                 <CardTitle>
@@ -209,7 +208,7 @@ class PostForm extends Component {
                   With supporting text below as a natural lead-in to additional
                   content.
                 </CardText>
-                <Button className="btn">Go somewhere</Button>
+                <Button href='https://twitter.com/' target='_blank' className="btn">Twitter</Button>
               </Card>
               <Card body className="text-left socialCard">
                 <CardTitle>
@@ -219,7 +218,7 @@ class PostForm extends Component {
                   With supporting text below as a natural lead-in to additional
                   content.
                 </CardText>
-                <Button className="btn">Go somewhere</Button>
+                <Button href='https://www.linkedin.com/' target='_blank' className="btn">LinkedIn</Button>
               </Card>
             </div>
           </section>

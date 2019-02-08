@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import NavBar from './components/NavBar';
 import { Route } from 'react-router-dom';
-import AboutMe from './components/Pages/Profile';
-import Home from './components/Pages/Home';
+import Profile from './components/Pages/Profile';
 import Posts from './components/PostContainer/Posts';
 import Login from './auth/Login/Login';
 import SignUp from './auth/SignUp/SignUp';
 import { connect } from 'react-redux';
-import PostForm from './components/PostContainer/PostForm'
+import PostForm from './components/PostContainer/PostForm';
 import { logOut } from './actions';
 import './App.css';
 
@@ -32,10 +31,11 @@ import './App.css';
 
 class App extends Component {
   render() {
-    console.log('this.props.posts');
+    console.log(this.props);
     return (
       <div className="App">
         <NavBar logout={this.props.logOut} />
+        {this.props.loginFailed && this.props.history.push('/login') }
         {/* <Route exact path="/" component={Home} /> */}
         {localStorage.getItem('token') ? (
           <Route exact path="/posts" component={Posts} />
@@ -43,7 +43,7 @@ class App extends Component {
           <Route history={this.props.history} path="/login" component={Login} />
         )}
         {localStorage.getItem('token') ? (
-          <Route path="/profile" component={AboutMe} />
+          <Route path="/profile" component={Profile} />
         ) : (
           <Route history={this.props.history} path="/login" component={Login} />
         )}
@@ -56,6 +56,7 @@ class App extends Component {
         {/* <PrivateRoute {...this.props} isLoggedIn={this.props.isLoggedIn} /> */}
 
         <Route path="/signup" component={SignUp} />
+        <Route exact path='/' component={Profile}/>
       </div>
     );
   }
@@ -63,6 +64,7 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   isLoggedIn: state.isLoggedIn,
+  loginFailed: state.loginFailed,
 });
 
 export default connect(

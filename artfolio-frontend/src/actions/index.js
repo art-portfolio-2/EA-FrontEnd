@@ -2,6 +2,8 @@ import axios from 'axios';
 
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILED = 'LOGIN_FAILED'
+export const TOGGLE_FAILED_LOGIN = 'TOGGLE_FAILED_LOGIN'
 
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 
@@ -20,23 +22,38 @@ export const DELETING_POST = 'DELETING_POST';
 export const DELETING_POST_SUCCESS = 'DELETING_POST_SUCCESS';
 export const DELETING_POST_FAILED = 'DELETING_POST_FAILED';
 
+export const FETCHING_USERS = 'FETCHING_USERS';
+export const FETCHING_USERS_SUCCESS = 'FETCHING_USERS_SUCCESS';
+export const FETCHING_USERS_FAILED = 'FETCHING_USERS_FAILED';
+
 export const login = user => dispatch => {
   dispatch({ type: LOGIN_START });
   axios
     .post('https://backend-art.herokuapp.com/api/login', user)
     .then(res => {
+      console.log('this logged');
+      console.log(res.data)
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('username', res.data.username);
+      localStorage.setItem('id', res.data.id);
       dispatch({ type: LOGIN_SUCCESS, payload: res });
       console.log(res.data);
     })
-    .catch(err => console.log(err.data));
+    .catch(err => dispatch({
+      type: LOGIN_FAILED,
+      payload: err,
+    }),);
 };
+
+export const toggleLogin = () => dispatch => {
+  dispatch({ type: TOGGLE_FAILED_LOGIN })
+}
 
 export const logOut = () => dispatch => {
   dispatch({ type: LOG_OUT_SUCCESS });
   localStorage.removeItem('token');
   localStorage.removeItem('username');
+  localStorage.removeItem('id');
 };
 
 export const register = newUser => dispatch => {
@@ -92,4 +109,12 @@ export const deletePost = id => dispatch => {
         payload: err,
       }),
     );
+};
+
+export const fetchUsers = id => dispatch => {
+  dispatch({ type: FETCHING_USERS });
+  axios
+    .get(`https://backend-art.herokuapp.com/api/users/posts/${id}`)
+    .then(res => dispatch({ type: FETCHING_USERS_SUCCESS, payload: res.data }))
+    .catch(err => dispatch({ type: FETCHING_USERS_FAILED, payload: err }));
 };

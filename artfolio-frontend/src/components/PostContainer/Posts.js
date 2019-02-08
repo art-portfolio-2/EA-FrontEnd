@@ -97,10 +97,10 @@ class Posts extends React.Component {
   render() {
     console.log(this.props);
     return (
-      <PostsContainer>
+      <PostsContainer className='postsPage'>
         <Jumbotron fluid className="jumboPosts">
           <Container fluid>
-            <h1 className="display-3">Your Portfolio</h1>
+            <h1 className="display-3">Explore Posts</h1>
             <p className="lead">
               This is a modified jumbotron that occupies the entire horizontal
               space of its parent.
@@ -128,7 +128,7 @@ class Posts extends React.Component {
                   With supporting text below as a natural lead-in to additional
                   content.
                 </CardText>
-                <Button className="btn">Go somewhere</Button>
+                <Button href='https://www.facebook.com/' target='_blank' className="btn">Facebook</Button>
               </Card>
               <Card body className="text-left socialCard">
                 <CardTitle>
@@ -138,7 +138,7 @@ class Posts extends React.Component {
                   With supporting text below as a natural lead-in to additional
                   content.
                 </CardText>
-                <Button className="btn">Go somewhere</Button>
+                <Button href='https://www.instagram.com' target='_blank' className="btn">Instagram</Button>
               </Card>
               <Card body className="text-left socialCard">
                 <CardTitle>
@@ -148,7 +148,7 @@ class Posts extends React.Component {
                   With supporting text below as a natural lead-in to additional
                   content.
                 </CardText>
-                <Button className="btn">Go somewhere</Button>
+                <Button href='https://twitter.com/' target='_blank' className="btn">Twitter</Button>
               </Card>
               <Card body className="text-left socialCard">
                 <CardTitle>
@@ -158,7 +158,7 @@ class Posts extends React.Component {
                   With supporting text below as a natural lead-in to additional
                   content.
                 </CardText>
-                <Button className="btn">Go somewhere</Button>
+                <Button href='https://www.linkedin.com/' target='_blank' className="btn">LinkedIn</Button>
               </Card>
             </div>
           </section>
