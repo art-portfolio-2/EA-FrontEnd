@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {
   // CardDeck,
-  // Card,
+  Card,
   // Button,
   // CardTitle,
   // CardText,
@@ -13,8 +13,9 @@ import {
   Jumbotron,
   Container,
 } from 'reactstrap';
+import Post from '../PostContainer/Post';
 import { connect } from 'react-redux';
-import { fetchUsers, fetchPosts } from '../../actions'
+import { fetchUsers, fetchPosts } from '../../actions';
 
 const ProfileContainer = styled.div`
   background-image: url('https://images.pexels.com/photos/134469/pexels-photo-134469.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
@@ -39,7 +40,21 @@ const MainSection = styled.div`
   height: 500px;
 
   .userProfile {
+    display: flex;
+    flex-direction: row;
     border: 1px solid red;
+    background-color: rgb(252, 252, 252, 0.8);
+
+    .profilePic {
+      display: inline;
+      margin: 10px 30px;
+      border: 1px solid blue;
+    }
+    .profileInfo {
+      margin: 50px 20px;
+      text-align: justify;
+      border: 1px solid red;
+    }
   }
 
   .userPosts {
@@ -48,16 +63,14 @@ const MainSection = styled.div`
 `;
 
 class Profile extends React.Component {
-componentDidMount = () => {
-  this.props.fetchPosts();
-  this.props.fetchUsers()
-  
-}
-
+  componentDidMount = () => {
+    this.props.fetchPosts();
+    this.props.fetchUsers(this.props.user.id);
+  };
 
   render() {
-    console.log(this.props.posts)
-    console.log(this.props.userProfile)
+    console.log(this.props.user.id);
+    console.log(this.props);
     return (
       <ProfileContainer className="profilePage">
         <Jumbotron fluid className="jumboProfile">
@@ -71,12 +84,45 @@ componentDidMount = () => {
         </Jumbotron>
 
         <MainSection>
-          <section className="userProfile">
-            <img src="" />
-            <div className="profileInfo">name</div>
-          </section>
+          <div>
+            <section className="userProfile">
+              <div className="profilePic">
+                <img
+                  style={{
+                    width: '250px',
+                    height: '250px',
+                    border: '1px solid blue',
+                    borderRadius: '50%',
+                  }}
+                  src={this.props.user.userImgUrl}
+                />
+              </div>
+              <div className="profileInfo">
+                <h4>@{this.props.user.username}</h4>
+                <h5>{this.props.user.fullName}</h5>
+                <p>{this.props.user.email}</p>
+              </div>
+            </section>
+          </div>
 
-          <section className="userPosts">p</section>
+          <section className="userPosts">
+            {this.props.userProfile.posts === undefined ? (
+              <div style={{border: "1px solid red", padding: '40px 40px 0 0'}}>
+                <h3 style={{color:'red',}}>Server Error, Cant find Post!</h3>
+                <p  style={{color:'red'}}>Please logout and try again!</p>
+              </div>
+            ) : (
+              <div>
+                {this.props.userProfile.posts.map(post => (
+                  <Post
+                    key={post.id}
+                    history={this.props.history}
+                    post={post}
+                  />
+                ))}
+              </div>
+            )}
+          </section>
         </MainSection>
       </ProfileContainer>
     );
@@ -86,6 +132,10 @@ componentDidMount = () => {
 const mapStateToProps = state => ({
   posts: state.posts,
   userProfile: state.userProfile,
-})
+  user: state.user,
+});
 
-export default connect(mapStateToProps, { fetchUsers, fetchPosts })(Profile);
+export default connect(
+  mapStateToProps,
+  { fetchUsers, fetchPosts },
+)(Profile);

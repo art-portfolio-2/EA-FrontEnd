@@ -1,6 +1,9 @@
 import {
+  LOGIN_START,
   LOGIN_SUCCESS,
+  LOGIN_FAILED,
   LOG_OUT_SUCCESS,
+  TOGGLE_FAILED_LOGIN,
   REGISTER_SUCCESS,
   FETCHING_POSTS,
   FETCHING_POSTS_SUCCESS,
@@ -21,12 +24,15 @@ const initialState = {
   isLoggedIn: false,
   fetchingPosts: false,
   fetchingUsers: false,
+  loginFailed: false,
+  isLoggingIn: false,
   token: null,
   creatingPost: false,
   deletingPost: false,
   error: null,
   userProfile: [],
   user: {
+    id: null,
     username: '',
     password: '',
     fullName: '',
@@ -37,15 +43,35 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOGIN_START:
+    return {
+      ...state,
+      isLoggingIn: true,
+    }
     case LOGIN_SUCCESS:
-      console.log('this logged');
       return {
         ...state,
         token: localStorage.token,
         username: localStorage.username,
+        id: localStorage.id,
         isLoggedIn: true,
+        isLoggingIn: false,
+        loginFailed: false,
         user: action.payload.data,
       };
+      case LOGIN_FAILED:
+      return {
+        ...state,
+        loginFailed: true,
+        isLoggedIn: false,
+        error: action.payload,
+      };
+      case TOGGLE_FAILED_LOGIN:
+      return {
+        ...state,
+        loginFailed: false,
+      }
+
     case LOG_OUT_SUCCESS:
       return {
         ...state,

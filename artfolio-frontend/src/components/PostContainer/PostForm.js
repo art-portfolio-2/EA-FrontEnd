@@ -105,8 +105,8 @@ class PostForm extends Component {
 
   createPost = ev => {
     ev.preventDefault();
-    this.props.history.push(`/posts`);
     this.props.createPost(this.state);
+    this.props.history.push(`/posts`);
   };
 
   handleChanges = ev => {
