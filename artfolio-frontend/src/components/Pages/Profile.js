@@ -20,7 +20,6 @@ const ProfileContainer = styled.div`
           transform: scale(1.1, 1.1)
         }
     }
-
   .jumboProfile {
     background-color: rgb(12, 12, 12, 0.7);
     h1 {
@@ -69,6 +68,11 @@ class Profile extends React.Component {
     this.props.fetchUser(userId);
     this.props.fetchUserPosts(userId);
   };
+
+  scroll = ev => {
+    ev.preventDefault()
+    window.scrollTo(0, 0);
+  }
 
   render() {
 
