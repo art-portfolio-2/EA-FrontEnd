@@ -11,7 +11,7 @@ import {
 } from 'reactstrap';
 import Post from './Post';
 import { connect } from 'react-redux';
-import { fetchPosts } from '../../actions';
+import { fetchPosts, updatePost } from '../../actions';
 
 const PostsContainer = styled.div`
   background-image: url('https://images.pexels.com/photos/134469/pexels-photo-134469.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
@@ -89,6 +89,12 @@ class Posts extends React.Component {
     this.props.fetchPosts();
   }
 
+  update = (ev, post) => {
+    ev.preventDefault();
+    this.props.history.push('/posts');
+    this.props.updatePost(post);
+  }
+
   redirect = ev => {
     ev.preventDefault()
     this.props.history.push('/posts/create-post');
@@ -110,9 +116,10 @@ class Posts extends React.Component {
 
         <SectionDiv>
           <section className="cardsContainer">
+          <Button onClick={this.redirect} className='btn' >Upload your Post</Button>
             <CardDeck>
               {this.props.posts.map(post => (
-                <Post key={post.id} history={this.props.history} post={post} />
+                <Post key={post.id} history={this.props.history} update={this.update} post={post} />
               ))}
             </CardDeck>
             <Button onClick={this.redirect} className='btn' >Upload your Post</Button>
@@ -173,5 +180,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchPosts },
+  { fetchPosts, updatePost },
 )(Posts);
