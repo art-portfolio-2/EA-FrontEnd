@@ -45,7 +45,7 @@ class Post extends Component {
 
     return (
       <CardDiv>
-        <Card className="postCard" style={{ cursor: 'pointer' }}>
+        <Card className="postCard" style={{ cursor: 'pointer', paddingBottom: '10px' }}>
           {this.props.post.userId === this.props.id ? (
             <div
               style={{
@@ -70,7 +70,7 @@ class Post extends Component {
                 delete
               </span>
             </div>
-          ) : null}
+          ) : <div><strong>Likes: </strong>{this.props.post.upvotes}</div> }
           <CardImg
             top
             style={{ width: '256px', height: '180px' }}
@@ -78,11 +78,11 @@ class Post extends Component {
             src={this.props.post.imageUrl}
             alt={this.props.post.postName}
           />
-          <CardBody style={{ width: '256px', height: '100px' }}>
-            <CardTitle>
+          <CardBody style={{ width: '256px', height: '100px', overflow: 'auto', padding: '20px 10px'}}>
+            <CardTitle >
               <h6>{this.props.post.postName}</h6>
             </CardTitle>
-            <CardSubtitle>
+            <CardSubtitle >
               {this.props.post.description === null ||
               this.props.post.description === '' ? (
                 <p>No description provided</p>

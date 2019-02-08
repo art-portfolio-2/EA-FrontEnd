@@ -13,6 +13,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 30px;
+  font-family: Dhurjati, sans-serif;
 }
 
 .links {
@@ -27,6 +28,7 @@
 
 .na {
   padding-left: 90px;
+  font-size: 25px;
 }
 
 .jumbo {
