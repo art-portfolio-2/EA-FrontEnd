@@ -36,7 +36,7 @@ class Post extends Component {
     ev.preventDefault();
     console.log(this.props.post.id);
     this.props.deletePost(this.props.post.id);
-    this.props.location.push(`/posts`);
+    this.props.history.push(`/posts`);
   };
 
   render() {
