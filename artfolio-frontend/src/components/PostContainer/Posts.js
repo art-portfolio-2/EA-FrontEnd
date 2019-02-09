@@ -12,6 +12,7 @@ import {
 import Loader from 'react-loader-spinner';
 import Post from './Post';
 import { connect } from 'react-redux';
+import ScrollToTop from 'react-scroll-up'
 import {
   fetchPosts,
   updatePost,
@@ -179,15 +180,9 @@ class Posts extends React.Component {
             <Button onClick={this.redirect} className="btn">
               Upload your Post
             </Button>
+            <ScrollToTop showUnder={160}>
             <span
-              onClick={this.scroll} 
-              style={{
-                zIndex: '5',
-                position: 'fixed',
-                bottom: '15px',
-                right: '20px',
-                cursor: 'pointer',
-              }}
+              //onClick={this.scroll} 
             >
               <i
                 id="scroller"
@@ -195,6 +190,7 @@ class Posts extends React.Component {
                 class="fas fa-arrow-alt-circle-up fa-3x"
               />
             </span>
+            </ScrollToTop>
           </section>
 
           <section className="socialContainer">
