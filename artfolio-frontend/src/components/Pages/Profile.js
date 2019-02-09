@@ -5,6 +5,7 @@ import Loader from 'react-loader-spinner';
 import ProfilePosts from './ProfilePosts';
 import { connect } from 'react-redux';
 import { fetchUser, fetchPosts, fetchUserPosts } from '../../actions';
+import ScrollToTop from 'react-scroll-up';
 
 const ProfileContainer = styled.div`
   background-image: url('https://images.pexels.com/photos/134469/pexels-photo-134469.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
@@ -13,11 +14,11 @@ const ProfileContainer = styled.div`
   background-size: cover;
   background-attachment: fixed;
   #scroller {
-      :hover {
-          text-shadow: 3px 3px 5px black;
-          transform: scale(1.1, 1.1)
-        }
+    :hover {
+      text-shadow: 3px 3px 5px black;
+      transform: scale(1.1, 1.1);
     }
+  }
   .jumboProfile {
     background-color: rgb(12, 12, 12, 0.7);
     h1 {
@@ -50,7 +51,6 @@ const MainSection = styled.div`
       text-align: center;
     }
   }
-
   .userPosts {
   }
 `;
@@ -68,13 +68,11 @@ class Profile extends React.Component {
   };
 
   scroll = ev => {
-    ev.preventDefault()
+    ev.preventDefault();
     window.scrollTo(0, 0);
-  }
+  };
 
   render() {
-    console.log(this.props.user.id);
-    console.log(this.props.userPosts);
     return (
       <ProfileContainer className="profilePage">
         <Jumbotron fluid className="jumboProfile">
@@ -88,14 +86,14 @@ class Profile extends React.Component {
         </Jumbotron>
 
         {this.props.fetchingUser ? (
-          <Loader type="Bars" color="red" height={80} width={80} />
+          <Loader type="Bars" color="lightgrey" height={80} width={80} />
         ) : (
           <MainSection>
             <div>
               <section className="userProfile">
                 <div className="profilePic">
                   <img
-                  alt={this.props.user.username}
+                    alt={this.props.user.username}
                     style={{
                       width: '250px',
                       height: '250px',
@@ -135,20 +133,18 @@ class Profile extends React.Component {
             </section>
           </MainSection>
         )}
-        <span 
-        
-        onClick={this.scroll} 
-          style={{
-            position: "fixed",
-            bottom: '15px',
-            right: '20px',
-            cursor: 'pointer'
-          }}>
-          <i
-            id='scroller'
-            style={{ textShadow: '1px 1px 2px black', color: 'grey' }}
-            class="fas fa-arrow-alt-circle-up fa-3x"></i>
-        </span>
+        <ScrollToTop showUnder={160}
+        >
+          <span
+          //onClick={this.scroll}
+          >
+            <i
+              id="scroller"
+              style={{ textShadow: '1px 1px 2px black', color: 'grey' }}
+              className="fas fa-arrow-alt-circle-up fa-3x"
+            />
+          </span>
+        </ScrollToTop>
       </ProfileContainer>
     );
   }

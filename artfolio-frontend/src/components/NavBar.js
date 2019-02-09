@@ -16,7 +16,7 @@ export default class NavBar extends React.Component {
             >
               Artfolio
             </span>{' '}
-            <i class="fas fa-home fa-lg" />
+            <i className="fas fa-home fa-lg" />
           </a>
         </div>
 
@@ -24,19 +24,19 @@ export default class NavBar extends React.Component {
           {localStorage.getItem('token') ? (
             <div>
               <NavLink className="links na" to="/profile">
-                Profile <i class="fas fa-user-alt fa-sm" />
+                Profile <i className="fas fa-user-alt fa-sm" />
               </NavLink>
               <NavLink className="links na" to="/posts">
-                Posts <i class="fas fa-compass fa-sm" />
+                Posts <i className="fas fa-compass fa-sm" />
               </NavLink>
             </div>
           ) : (
             <div>
               <NavLink className="links na" to="/login">
-                Profile <i class="fas fa-user-alt fa-sm" />
+                Profile <i className="fas fa-user-alt fa-sm" />
               </NavLink>
               <NavLink className="links na" to="/login">
-                Posts <i class="fas fa-compass fa-sm" />
+                Posts <i className="fas fa-compass fa-sm" />
               </NavLink>
             </div>
           )}
@@ -54,13 +54,13 @@ export default class NavBar extends React.Component {
                 >
                   Log Out
                 </span>{'  '}
-                <i class="fas fa-sign-out-alt fa-lg" />
+                <i className="fas fa-sign-out-alt fa-lg" />
               </span>
             </Link>
           ) : (
             <Link className="links" to="/login">
               <span>
-                <i class="fas fa-sign-in-alt fa-lg"> </i>
+                <i className="fas fa-sign-in-alt fa-lg"> </i>
                 <span
                   style={{
                     fontFamily: 'Dhurjati, sans-serif',
